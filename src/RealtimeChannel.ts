@@ -796,14 +796,20 @@ export default class RealtimeChannel {
       old: {},
     }
 
-    if (payload.type === 'INSERT' || payload.type === 'UPDATE') {
+    if (
+      (payload.type === 'INSERT' || payload.type === 'UPDATE') &&
+      payload.record
+    ) {
       records.new = Transformers.convertChangeData(
         payload.columns,
         payload.record
       )
     }
 
-    if (payload.type === 'UPDATE' || payload.type === 'DELETE') {
+    if (
+      (payload.type === 'UPDATE' || payload.type === 'DELETE') &&
+      payload.old_record
+    ) {
       records.old = Transformers.convertChangeData(
         payload.columns,
         payload.old_record
